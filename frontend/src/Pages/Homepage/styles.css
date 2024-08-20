@@ -1,0 +1,32 @@
+.btn {
+  margin: .5rem .5rem;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  border-radius: .2rem;
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+table {
+  margin-top: 1rem;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: center;
+  border: 0.06rem solid #ddd;
+  padding: 0.5rem;
+}
+
+th {
+  text-align: center;
+  background-color: #f4f4f4;
+}
+
+tr:nth-child(even) {
+  background-color: #b6b6b6;
+}

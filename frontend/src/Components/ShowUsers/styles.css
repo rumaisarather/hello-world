@@ -1,0 +1,16 @@
+.table-actions {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+.btn-notification {
+    padding: 5px 10px;
+    outline: none;
+    border: none;
+    border-radius: .2rem;
+    background-color: var(--primary);
+    color: #fff;
+    cursor: pointer;
+}

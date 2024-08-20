@@ -1,0 +1,32 @@
+:root {
+  --primary: #037ce6;
+  --secondary: hsl(0, 0%, 50%);
+  --ternary: #6c6c6c;
+  --light: #f0f0f0;
+  --light-bg: #eee;
+  --success: rgb(18, 94, 18);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+body {
+  width: 100%;
+  font-family: sans-serif;
+  background-color: var(--light-bg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Utilities */
+.container {
+  max-width: 1280px;
+  padding: .5rem;
+  margin: 0rem 7rem;
+}
