@@ -4,9 +4,12 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './ckStyles.css'
 import { Box,Button } from '@mui/material';
 
-const ckEditorComponent = ({ closeCk,recipientUserId }) => {
+
+const CkEditorComponent = ({ closeCk,recipientUserId }) => {
     const [notificationContent, setNotificationContent] = useState('');
-    const [notifications, setNotifications] = useState([]);
+ const [notifications, setNotifications] = useState([]);
+    const [loading, setLoading] = useState(false);
+  
 
     const handleSaveNotification = () => {
         if (notificationContent.trim()) {
@@ -23,10 +26,8 @@ const ckEditorComponent = ({ closeCk,recipientUserId }) => {
     };
 
     const handleSendNotification = async () => {
-        if (notificationContent.trim()) {
-           
-            try {
-            
+          setLoading(true);
+          try{
                 const token = localStorage.getItem('authToken');
                 const response = await fetch('http://localhost:8000/api/notifications', {
                     method: 'POST',
@@ -35,30 +36,30 @@ const ckEditorComponent = ({ closeCk,recipientUserId }) => {
                         'Authorization': `Bearer ${token}`,
                     },
                     body: JSON.stringify({
-                        user_id: 'recipientUserId',
-                    notifications: notificationContent,
-                    send_time: new Date().toISOString(),
+                        user_id: recipientUserId,
+                        notifications: notificationContent,
+                        send_time: new Date().toISOString(),
                     }),
                 });
-
+            
                 if (!response.ok) {
                     throw new Error('Failed to send notification');
                 }
 
                 const result = await response.json();
-                console.log('Notification sent successfully:', result);
+               console.log('Notification sent successfully:', result);
 
-                // Optionally clear notifications or provide user feedback
-                setNotificationContent(''); // Clear editor after sending
-                closeCk(); // Close CKEditor after sending
+               // Optionally clear notifications or provide user feedback
+                setNotificationContent(''); 
+                closeCk(); 
 
-            } catch (error) {
+           } catch (error) {
                 console.error('Error sending notification:', error);
-            }
-        } else {
-            alert('Notification content cannot be empty!');
-        }
-    };
+                alert('Failed to send notification. Please try again.');
+            } finally {
+                setLoading(false);
+           }
+ };
 
     return (
         <Box className="notification-editor-container">
@@ -66,20 +67,19 @@ const ckEditorComponent = ({ closeCk,recipientUserId }) => {
             <Box >
                 <CKEditor
                     editor={ClassicEditor}
-                    data={notificationContent}
+                    data={notifications}
                     onChange={(event, editor) => {
-                        const data = editor.getData();
-                        setNotificationContent(data);
+                        setNotificationContent(editor.getData());
                     }}
 
                 />
             </Box>
             <Box className="ck-actions">
-                <Button variant="outlined" onClick={closeCk} className="cancle-button">
-                    Discard Message
+                <Button variant="outlined" color="secondary"onClick={closeCk} disabled={loading}>
+                    Cancel
                 </Button>
-                <Button variant="contained" onClick={handleSendNotification} className="save-button">
-                    Send Notification
+                <Button variant="contained" color="primary" onClick={handleSendNotification}  disabled={loading}>
+                {loading ? 'Sending...' : 'Send Notification'}
                 </Button>
             </Box>
 
@@ -100,4 +100,4 @@ const ckEditorComponent = ({ closeCk,recipientUserId }) => {
     );
 };
 
-export default ckEditorComponent;
+export default CkEditorComponent;

@@ -19,6 +19,11 @@ function Homepage() {
     const [showCkEditor, setShowCkEditor] = useState({ open: false, recipientUserId: null });
     const [loading, setLoading] = useState(true);
 
+
+    useEffect(() => {
+        fetchUsers();
+      }, []);
+
     const fetchUsers = async () => {
         setLoading(true);
         try {
@@ -91,10 +96,6 @@ function Homepage() {
         }
     };
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
     return (
         <Box className="container">
             <Box sx={{ border: '1px solid grey', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '.3rem' }}>
@@ -136,7 +137,9 @@ function Homepage() {
                 user={newUser}
                 open={openAddDialog}
                 onClose={() => setOpenAddDialog(false)}
-                onChange={handleNewChange}
+                onChange={(event) =>
+                    setNewUser({ ...newUser, [event.target.name]: event.target.value })
+                  }
                 onAdd={handleAddUser} 
             />
 

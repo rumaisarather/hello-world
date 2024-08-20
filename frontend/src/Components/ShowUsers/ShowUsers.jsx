@@ -5,7 +5,7 @@ function ShowUsers({ users, openCK }) {
 
     const handleSendNotification = (user) => {
         openCK(user.id); // Open CKEditor when sending notification
-        console.log(`Preparing to send notification to ${user.email}`);
+        // console.log(`Preparing to send notification to ${user.email}`);
     };
     return (
  <>
@@ -20,8 +20,7 @@ function ShowUsers({ users, openCK }) {
                         <td>{user.email}</td>
                         <td>{user.secondary_email}</td>
                         <td>
-                            {user.notification}
-                            <div>
+                           
                                 <Button
                                     variant="contained"
                                     color="primary"
@@ -29,7 +28,7 @@ function ShowUsers({ users, openCK }) {
                                 >
                                     Send 
                                 </Button>
-                           </div>
+                        
                            </td>
                     </tr>
                 ))
